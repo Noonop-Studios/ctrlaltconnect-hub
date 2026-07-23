@@ -329,6 +329,10 @@ html{scroll-behavior:smooth}
 
 .reallogo{height:6.6cqw !important;width:auto !important;display:block;margin:0}
 #builderview .reallogo,#reelview .reallogo{height:6.6cqw !important}
+
+/* footer hugs content on every page */
+.view{min-height:0 !important}
+.view.active{flex:1 0 auto}
 </style>
 </head>
 <body>
@@ -459,7 +463,7 @@ function lock(cls){var b=STATE.b;return '<img class="reallogo '+(cls||'')+'" src
 function frameHTML(type,f){
   var KICK={day:'Day',cine:'Highlight',sell:'Book now',bts:'Behind',talk:'People',pov:'POV',meme:'Meme',needle:'Needle'};
   var DAYHEAD={connect:'A day<br>in the life',ski:'Peaks and<br>people',sail:'A week with<br>strangers'};
-  var MEMECAP={connect:'When the group chat says one more trip',ski:'When someone says last run and means it',sail:'When the wind drops but the playlist does not'};
+  var MEMECAP={connect:'POV: the group chat finally stopped talking and booked it',ski:'Me swearing this is the last run of the day (it never is)',sail:'When the forecast promised light winds and absolutely lied'};
   var b=BRAND[STATE.b],grad=GRADCSS[STATE.b],kicker='EP.01';
   var headTxt=f.head;
   if(type==='cover'){
@@ -705,7 +709,7 @@ function showDIY(){_show('builderview','DIY');if(window.__fbInit)window.__fbInit
   +'<p class="tagline">Bespoke digital experiences that elevate your brand.</p>'
   +'<div class="contact"><a href="mailto:info@noonopstudios.com">info@noonopstudios.com</a><span class="sep">&middot;</span><a href="https://noonopstudios.com" target="_blank" rel="noopener">noonopstudios.com</a></div>'
   +'</div><div class="site-f-bar"><div><span>Prepared for Ctrl.Alt Connect</span><span>&copy; NooNop Studios 2026</span></div></div></footer>';
- ['hubview','reelview','builderview'].forEach(function(id){var v=document.getElementById(id); if(!v)return; var d=document.createElement('div'); d.innerHTML=F; v.appendChild(d.firstChild);});
+ var _fd=document.createElement('div'); _fd.innerHTML=F; document.body.appendChild(_fd.firstChild);
 })();
 </script>
 </body>
