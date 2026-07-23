@@ -311,6 +311,8 @@ html{scroll-behavior:smooth}
 .sty-cream .lockup .k{background:var(--navy)!important;color:#F4F2EC!important}
 .sty-cream .lockup .w{color:var(--navy)!important}
 .sty-orange .covhead h2,.sty-orange .curl,.sty-orange .reboot,.sty-orange .ourl,.sty-orange .ep{color:var(--navy)!important}
+.sty-cream .footbox{color:var(--navy)!important;border-color:rgba(15,28,33,.38)!important}
+.sty-orange .footbox{color:var(--navy)!important;border-color:rgba(15,28,33,.4)!important}
 .sty-orange .lockup .k{background:var(--navy)!important;color:#F4F2EC!important}
 .sty-orange .lockup .w{color:var(--navy)!important}
 .sty-orange .rebtn{background:var(--navy)!important;color:#F4F2EC!important}
@@ -463,7 +465,7 @@ function lock(cls){var b=STATE.b;return '<img class="reallogo '+(cls||'')+'" src
 function frameHTML(type,f){
   var KICK={day:'Day',cine:'Highlight',sell:'Book now',bts:'Behind',talk:'People',pov:'POV',meme:'Meme',needle:'Needle'};
   var DAYHEAD={connect:'A day<br>in the life',ski:'Peaks and<br>people',sail:'A week with<br>strangers'};
-  var MEMECAP={connect:'POV: the group chat finally stopped talking and booked it',ski:'Me swearing this is the last run of the day (it never is)',sail:'When the forecast promised light winds and absolutely lied'};
+  var MEMECAP={connect:'',ski:'',sail:''};
   var b=BRAND[STATE.b],grad=GRADCSS[STATE.b],kicker='EP.01';
   var headTxt=f.head;
   if(type==='cover'){
@@ -480,7 +482,6 @@ function frameHTML(type,f){
     if(f.k==='meme'){
       var hm='<div class="bg" style="background:'+grad+'"></div><div class="cvig"></div>';
       hm+='<div class="top">'+lock()+'</div>';
-      hm+='<div class="memecap rise d1">'+(MEMECAP[STATE.b]||'When the trip ends but the group chat does not')+'</div>';
       hm+='<div class="footbox meme">YOUR FOOTAGE</div>';
       return hm;
     }
@@ -625,7 +626,7 @@ STATE.raf=requestAnimationFrame(frame);
     if(S.f==='content'){var c=S.content;
       var h='<div class="bg" style="background:'+STYLEBG()+'"></div><div class="cvig"></div>';
       h+='<div class="top">'+lock()+'</div>';
-      h+='<div class="footbox" style="transform:translateY('+((50-(c.y||50))*0.55)+'cqw)">'+esc(c.label)+'</div>';return h;}
+      h+='<div class="footbox"><span style="display:inline-block;transform:translateY('+((50-(c.y||50))*0.55)+'cqw)">'+esc(c.label)+'</span></div>';return h;}
     var c=S.outro;var ty=(50-c.y)*0.7; if(ty>12)ty=12; if(ty<-42)ty=-42;
     var OH={connect:'Want to reboot?',ski:'See you on the mountain',sail:'See you on the water'};
     var h='<div class="bg" style="background:'+STYLEBG()+'"></div><div class="grain"></div>';
