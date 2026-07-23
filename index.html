@@ -658,5 +658,26 @@ function showReel(){_show('reelview','Reel');try{if(typeof loadFormat=='function
 function showDIY(){_show('builderview','DIY');if(window.__fbInit)window.__fbInit();}
 </script>
 
+<script>
+/* Ctrl.Alt.Connect hub deep-link routing (added for handover doc links) */
+(function(){
+  function route(){
+    var h=(location.hash||"").toLowerCase().replace(/^#/,"");
+    if(h==="reels"||h==="reel"||h==="templates"){ if(window.showReel) window.showReel(); }
+    else if(h==="builder"||h==="frame"||h==="diy"){ if(window.showDIY) window.showDIY(); }
+    else if(h==="hub"||h===""){ if(window.showHub) window.showHub(); }
+  }
+  window.addEventListener("hashchange", route);
+  window.addEventListener("load", function(){ setTimeout(route,40); setTimeout(route,180); });
+  if(document.readyState==="complete"){ setTimeout(route,40); }
+  document.addEventListener("click", function(e){
+    var a=e.target.closest ? e.target.closest("a[onclick]") : null; if(!a) return;
+    var oc=a.getAttribute("onclick")||"";
+    if(/showReel/.test(oc)) history.replaceState(null,"","#reels");
+    else if(/showDIY/.test(oc)) history.replaceState(null,"","#builder");
+    else if(/showHub/.test(oc)) history.replaceState(null,"","#hub");
+  }, true);
+})();
+</script>
 </body>
 </html>
