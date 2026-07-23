@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>Ctrl.Alt.Connect · Reel Template System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Pixelify+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=general-sans@400,500,600,700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --offwhite:#EEECE0;--orange:#D35F36;--navy:#0F1C21;--olive:#303527;
+    --sail:linear-gradient(180deg,#4F91BD 0%,#7DB9B7 27%,#BEC37B 38%,#F8CD46 53%,#F8CD46 63%,#E8D696 80%,#DFDBC5 100%);
+    --ski:linear-gradient(180deg,#4F92BE 0%,#4F92BE 15%,#CA5D7D 67%,#CD6784 71%,#D06E89 74%,#FFF9EA 100%);
+    --connectgrad:linear-gradient(150deg,#05092D 0%,#4F92BE 45%,#E3AC7B 78%,#E55627 100%);
+    --disp:'General Sans','Liberation Sans','Inter',system-ui,sans-serif;
+    --body:'Inter',system-ui,sans-serif;
+    --mono:'Pixelify Sans','Courier New',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{min-height:100%}
+  body{background:var(--navy);color:var(--offwhite);font-family:var(--body);-webkit-font-smoothing:antialiased}
+  a{color:inherit}
+  .wrap{max-width:1080px;margin:0 auto;padding:28px 22px 64px}
+
+  /* top bar */
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap}
+  .lock{display:inline-flex;align-items:center;gap:.42em;font-family:var(--disp);font-weight:700;font-size:20px;line-height:1;letter-spacing:-.01em;text-decoration:none}
+  .lock .key{background:#fff;color:var(--navy);padding:.24em .4em;border-radius:2px}
+  .lock .sub{font-weight:600;color:#fff}
+  .topbar .back{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#7f9299;text-decoration:none}
+  .topbar .back:hover{color:var(--orange)}
+
+  .lede{margin-top:22px;max-width:640px}
+  .lede .kick{font-family:var(--mono);font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--orange)}
+  .lede h1{font-family:var(--disp);font-weight:600;font-size:clamp(26px,4vw,38px);line-height:1.02;text-transform:uppercase;letter-spacing:-.01em;margin-top:10px}
+  .lede p{margin-top:12px;font-size:14px;line-height:1.6;color:#aeb9be}
+
+  /* studio layout */
+  .studio{display:grid;grid-template-columns:1fr;gap:26px;margin-top:30px}
+  @media(min-width:900px){.studio{grid-template-columns:340px 1fr;align-items:start}}
+
+  /* controls */
+  .panel{background:#16242b;border:1px solid #26363d;border-radius:16px;padding:20px}
+  .panel + .panel{margin-top:16px}
+  .panel .ptitle{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#7f9299;margin-bottom:12px}
+  .seg{display:flex;gap:6px;background:#101c22;border:1px solid #26363d;border-radius:10px;padding:5px}
+  .seg button{flex:1;appearance:none;border:0;background:transparent;color:#aeb9be;font-family:var(--disp);font-weight:600;font-size:13px;text-transform:uppercase;letter-spacing:.02em;padding:9px 6px;border-radius:7px;cursor:pointer;transition:.14s}
+  .seg button:hover{color:#fff}
+  .seg button.on{background:var(--orange);color:var(--navy)}
+  .seg.brand button.on.b-sail{background:#F0C24C;color:var(--navy)}
+  .seg.brand button.on.b-ski{background:#CA5D7D;color:#fff}
+
+  .rowlabel{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#66787f;margin:16px 0 8px}
+
+  .actions{display:flex;gap:10px;margin-top:6px}
+  .btn{flex:1;display:inline-flex;align-items:center;justify-content:center;gap:8px;appearance:none;border:1px solid #2c3d44;background:#101c22;color:#fff;font-family:var(--disp);font-weight:600;font-size:13.5px;padding:12px;border-radius:9px;cursor:pointer;transition:.14s;text-transform:uppercase;letter-spacing:.02em}
+  .btn:hover{border-color:var(--orange)}
+  .btn.play.on{background:var(--orange);color:var(--navy);border-color:var(--orange)}
+
+  .togline{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:14px;font-size:13px;color:#aeb9be}
+  .safeseg{display:flex;gap:5px;background:#101c22;border:1px solid #26363d;border-radius:9px;padding:4px}
+  .safeseg button{appearance:none;border:0;background:transparent;color:#8fa1a8;font-family:var(--mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:7px 9px;border-radius:6px;cursor:pointer}
+  .safeseg button.on{background:#26363d;color:#fff}
+
+  .meta{margin-top:16px;border-top:1px solid #1c2a30;padding-top:14px}
+  .meta .mrow{display:flex;justify-content:space-between;gap:10px;font-size:12.5px;padding:5px 0;color:#aeb9be}
+  .meta .mrow b{color:#fff;font-weight:600}
+  .meta .swrow{display:flex;align-items:center;gap:8px;margin-top:8px}
+  .meta .sw{width:22px;height:16px;border-radius:4px;border:1px solid rgba(255,255,255,.14)}
+
+  /* stage */
+  .stage{display:flex;flex-direction:column;align-items:center}
+  .phone-shell{position:relative}
+  .phone{position:relative;width:min(340px,86vw);aspect-ratio:9/16;container-type:size;border-radius:30px;overflow:hidden;background:#000;box-shadow:0 30px 70px -30px rgba(0,0,0,.85),0 0 0 8px #05090b,0 0 0 9px #26363d}
+  .notch{position:absolute;top:10px;left:50%;transform:translateX(-50%);width:96px;height:20px;background:#05090b;border-radius:12px;z-index:40}
+
+  /* the frame canvas */
+  .frame{position:absolute;inset:0;overflow:hidden;font-family:var(--disp)}
+  .frame .grain{position:absolute;inset:0;z-index:5;opacity:.15;mix-blend-mode:overlay;pointer-events:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='120' height='120'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>")}
+  .frame .fkick{position:absolute;font-family:var(--mono);text-transform:uppercase;letter-spacing:.14em;font-size:13px;z-index:8}
+  .frame .fhead{position:absolute;font-weight:600;text-transform:uppercase;line-height:.94;letter-spacing:-.02em;z-index:8}
+  .frame .frule{position:absolute;height:4px;background:var(--orange);z-index:8}
+
+  /* cover / content geometry */
+  .frame.cover .fkick,.frame.content .fkick{left:34px;}
+  .frame.cover .fhead,.frame.content .fhead{left:34px;right:34px;bottom:120px;font-size:clamp(34px,10vw,46px)}
+  .frame.cover .fkick{top:120px}
+  .frame.content .fkick{bottom:236px}
+  .frame.content .fhead{bottom:96px}
+
+  /* outro geometry */
+  .frame.outro{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:30px}
+  .outro .olock{display:inline-flex;align-items:center;gap:.42em;font-weight:700;font-size:30px;line-height:1;letter-spacing:-.01em}
+  .outro .olock .key{padding:.22em .38em;border-radius:3px}
+  .outro .osub{font-weight:600}
+  .outro .otag{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;margin-top:22px}
+  .outro .cta{margin-top:16px;font-family:var(--disp);font-weight:600;font-size:15px;letter-spacing:.01em;padding:12px 22px;border-radius:9px;text-transform:uppercase}
+  .outro .gbar{position:absolute;left:0;right:0;bottom:0;height:14px}
+
+  /* safe zones overlay */
+  .safe{position:absolute;inset:0;z-index:30;pointer-events:none;display:none}
+  .safe.show{display:block}
+  .safe .zone{position:absolute;border:2px dashed rgba(255,255,255,.85);}
+  .safe .zlabel{position:absolute;font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.55);padding:2px 5px;border-radius:3px}
+  
+
+  /* progress dots + caption under phone */
+  .dots{display:flex;gap:7px;margin-top:18px}
+  .dots span{width:8px;height:8px;border-radius:50%;background:#2c3d44;cursor:pointer;transition:.14s}
+  .dots span.on{background:var(--orange);width:22px;border-radius:6px}
+  .stagecap{margin-top:14px;text-align:center;font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:#7f9299}
+
+  /* filmstrip */
+  .strip{margin-top:34px}
+  .strip .stitle{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:#7f9299;margin-bottom:12px}
+  .thumbs{display:grid;grid-template-columns:repeat(9,1fr);gap:10px}
+  @media(max-width:760px){.thumbs{grid-template-columns:repeat(3,1fr)}}
+  .thumb{position:relative;aspect-ratio:9/16;border-radius:10px;overflow:hidden;cursor:pointer;border:2px solid transparent;transition:.14s;background:#000}
+  .thumb:hover{transform:translateY(-2px)}
+  .thumb.on{border-color:var(--orange)}
+  .thumb .tl{position:absolute;left:5px;bottom:5px;z-index:6;font-family:var(--mono);font-size:8px;letter-spacing:.04em;text-transform:uppercase;color:#fff;background:rgba(0,0,0,.5);padding:2px 4px;border-radius:3px}
+  .thumb .mini{position:absolute;inset:0;transform:scale(.31);transform-origin:top left;width:323%;height:323%}
+
+  .foot{margin-top:44px;padding-top:18px;border-top:1px solid #1c2a30;font-family:var(--mono);font-size:11px;letter-spacing:.05em;color:#66787f;display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap}
+  .foot a{color:#8fa1a8;text-decoration:none}
+  .foot a:hover{color:var(--orange)}
+.safebar{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
+.safe.show{opacity:1}
+.safe .safe{position:absolute}
+.safe .keep{position:absolute;background:repeating-linear-gradient(45deg,rgba(211,95,54,.16) 0 6px,transparent 6px 12px)}
+.safe .sline{position:absolute}
+.safe .disc{position:absolute;border-radius:50%;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.45)}
+.safe .cbar{position:absolute;height:2.4cqw;background:rgba(255,255,255,.28);border-radius:2px}
+.safe .lab{position:absolute;font-size:2.5cqw;letter-spacing:.03em;color:#fff;background:rgba(9,16,20,.92);padding:.26em .48em;text-transform:uppercase;white-space:nowrap}
+.safe .lab.g{background:#1f7a45}
+.safe .lab.k{background:var(--orange);color:var(--navy)}
+.safe .plabel{position:absolute;font-family:var(--mono);font-size:2.9cqw;letter-spacing:.05em;text-transform:uppercase;color:#0f1c21;background:rgba(120,210,150,.95);padding:.3em .55em}
+
+</style>
+</head>
+<body>
+<div class="wrap">
+  
+
+  <div class="lede">
+    <div class="kick">DIY frame builder</div>
+    <h1>Build a frame</h1>
+    <p>Pick a brand, step through the Cover, Content and Outro frames, or hit play to watch the reel run. Toggle the TikTok and Instagram safe zones to see exactly where captions, buttons and the profile rail land so nothing important gets covered.</p>
+  </div>
+
+  <div class="studio">
+    <!-- CONTROLS -->
+    <div>
+      <div class="panel">
+        <div class="ptitle">Brand</div>
+        <div class="seg brand" id="brandSeg">
+          <button data-brand="connect" class="on">connect</button>
+          <button data-brand="ski" class="b-ski">ski</button>
+          <button data-brand="sail" class="b-sail">sail</button>
+        </div>
+
+        <div class="rowlabel">Frame</div>
+        <div class="seg" id="frameSeg">
+          <button data-frame="0" class="on">Cover</button>
+          <button data-frame="1">Content</button>
+          <button data-frame="2">Outro</button>
+        </div>
+
+        <div class="actions">
+          <button class="btn play" id="playBtn">▶ Play reel</button>
+        </div>
+
+        <div class="togline">
+          <span>Safe zones</span>
+          <div class="safeseg" id="safeSeg">
+            <button data-safe="none" class="on">Off</button>
+            <button data-safe="tt">TikTok</button>
+            <button data-safe="ig">Instagram</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel">
+        <div class="ptitle">This frame</div>
+        <div class="meta" style="border:0;padding:0;margin:0">
+          <div class="mrow"><span>Format</span><b id="mFormat">1080 × 1920 · 9:16</b></div>
+          <div class="mrow"><span>Frame</span><b id="mFrame">Cover</b></div>
+          <div class="mrow"><span>Background</span><b id="mBg">Navy</b></div>
+          <div class="mrow"><span>Logo</span><b id="mLogo">Outro only</b></div>
+          <div class="swrow" id="mSwatches"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- STAGE -->
+    <div class="stage">
+      <div class="phone-shell">
+        <div class="phone">
+          <div class="notch"></div>
+          <div class="frame" id="frame"></div>
+          <div class="safe" id="safe"></div>
+        </div>
+      </div>
+      <div class="dots" id="dots"><span class="on"></span><span></span><span></span></div>
+      <div class="stagecap" id="stagecap">connect · cover</div>
+    </div>
+  </div>
+
+  <!-- FILMSTRIP -->
+  <div class="strip">
+    <div class="stitle">All 9 frames · 3 brands × cover / content / outro</div>
+    <div class="thumbs" id="thumbs"></div>
+  </div>
+
+  <div class="foot">
+    <span>Ctrl.Alt.Connect · Reel Template System</span>
+    <a href="index.html">ctrlaltconnect.co.uk</a>
+  </div>
+</div>
+
+<script>
+// ---- Frame data (exact specs) ----
+const GRAD = {
+  sail:"linear-gradient(180deg,#4F91BD 0%,#7DB9B7 27%,#BEC37B 38%,#F8CD46 53%,#F8CD46 63%,#E8D696 80%,#DFDBC5 100%)",
+  ski:"linear-gradient(180deg,#4F92BE 0%,#4F92BE 15%,#CA5D7D 67%,#CD6784 71%,#D06E89 74%,#FFF9EA 100%)"
+};
+const NAVY="#0F1C21", ORANGE="#D35F36", OFF="#EEECE0";
+
+const DATA = {
+  connect:{
+    label:"connect", brandColor:ORANGE,
+    frames:[
+      {type:"cover",  bg:NAVY, bgName:"Navy", kick:"EP.01", kickColor:ORANGE, head:"A DAY IN THE LIFE", headColor:ORANGE, swatches:[NAVY,ORANGE]},
+      {type:"content",bg:NAVY, bgName:"Navy", kick:"06:00", kickColor:ORANGE, head:"THE CITY'S STILL ASLEEP", headColor:ORANGE, swatches:[NAVY,ORANGE]},
+      {type:"outro",  bg:OFF,  bgName:"Off white", lockColor:NAVY, keyBg:NAVY, keyFg:OFF, sub:"connect", subColor:NAVY, tag:"MEET THE PEOPLE", tagColor:NAVY, cta:"@ctrl.altconnect", ctaBg:ORANGE, ctaFg:NAVY, swatches:[OFF,NAVY,ORANGE]}
+    ]
+  },
+  ski:{
+    label:"ski", brandColor:"#CA5D7D",
+    frames:[
+      {type:"cover",  bg:OFF, bgName:"Off white", kick:"EP.02 SKI", kickColor:ORANGE, rule:true, head:"ABOVE THE CLOUDS", headColor:NAVY, swatches:[OFF,NAVY,ORANGE]},
+      {type:"content",bg:GRAD.ski, bgName:"Ski gradient", kick:"EP.02", kickColor:NAVY, head:"FIRST LIFT FIRST LIGHT", headColor:NAVY, swatches:["#4F92BE","#CA5D7D","#FFF9EA"]},
+      {type:"outro",  bg:NAVY, bgName:"Navy", lockColor:"#fff", keyBg:"#fff", keyFg:NAVY, sub:"ski", subColor:"#fff", tag:"WINTER 26", tagColor:"#fff", cta:"ctrlaltconnect.co.uk", ctaBg:"transparent", ctaFg:"#fff", ctaBorder:true, gbar:GRAD.ski, swatches:[NAVY,"#4F92BE","#CA5D7D"]}
+    ]
+  },
+  sail:{
+    label:"sail", brandColor:"#F0C24C",
+    frames:[
+      {type:"cover",  bg:GRAD.sail, bgName:"Sail gradient", kick:"DAY.02 SAIL", kickColor:NAVY, head:"SIX DAYS AT SEA", headColor:NAVY, swatches:["#4F91BD","#F8CD46","#DFDBC5"]},
+      {type:"content",bg:GRAD.sail, bgName:"Sail gradient", kick:"DAY.02", kickColor:NAVY, head:"NOTHING BUT OPEN WATER", headColor:NAVY, swatches:["#4F91BD","#F8CD46","#DFDBC5"]},
+      {type:"outro",  bg:ORANGE, bgName:"Orange", lockColor:NAVY, keyBg:NAVY, keyFg:ORANGE, sub:"sail", subColor:NAVY, tag:"CROATIA 26", tagColor:NAVY, cta:"ctrlaltconnect.co.uk", ctaBg:"transparent", ctaFg:NAVY, ctaBorder:true, ctaBorderColor:NAVY, swatches:[ORANGE,NAVY]}
+    ]
+  }
+};
+const BRANDS=["connect","ski","sail"];
+const FRAMES=["Cover","Content","Outro"];
+
+// ---- Build one frame's inner HTML ----
+function renderFrame(brand, idx){
+  const f = DATA[brand].frames[idx];
+  let bg = f.bg;
+  let html = `<div class="grain"></div>`;
+  if(f.type==="outro"){
+    html += `<div class="olock" style="color:${f.lockColor}">`+
+            `<span class="key" style="background:${f.keyBg};color:${f.keyFg}">ctrl.alt</span>`+
+            `<span class="osub" style="color:${f.subColor}">${f.sub}</span></div>`;
+    html += `<div class="otag" style="color:${f.tagColor}">${f.tag}</div>`;
+    const border = f.ctaBorder ? `border:2px solid ${f.ctaBorderColor||f.ctaFg};` : "";
+    html += `<div class="cta" style="background:${f.ctaBg};color:${f.ctaFg};${border}">${f.cta}</div>`;
+    if(f.gbar) html += `<div class="gbar" style="background:${f.gbar}"></div>`;
+  } else {
+    html += `<div class="fkick" style="color:${f.kickColor}">${f.kick}</div>`;
+    if(f.rule) html += `<div class="frule" style="left:34px;bottom:206px;width:64px"></div>`;
+    html += `<div class="fhead" style="color:${f.headColor}">${f.head}</div>`;
+  }
+  return {bg, html, cls:f.type};
+}
+
+// ---- State ----
+let curBrand="connect", curFrame=0, curSafe="none", playing=false, timer=null;
+
+const frameEl=document.getElementById('frame');
+const safeEl=document.getElementById('safe');
+const dotsEl=document.getElementById('dots').children;
+
+
+function renderSafe(kind){
+
+  var el=safeEl;el.className='safe'+(kind!=='off'&&kind!=='none'?' show':'');el.innerHTML='';
+  if(kind==='off')return;
+  if(kind==='guides'){
+    el.innerHTML='<div class="safe" style="inset:8cqw;border:1.4px dashed rgba(120,180,220,.85)"></div>'
+     +'<div class="plabel" style="left:8cqw;top:16cqw;background:rgba(120,180,220,.9)">Brand safe area</div>';return;
+  }
+  var tt=kind==='tt';
+  var P=tt?{bottom:17,right:12,railTop:50,railBot:87,icons:6,name:'TikTok'}:{bottom:22,right:13,railTop:53,railBot:83,icons:5,name:'Instagram'};
+  var rw=P.right;
+  el.innerHTML+='<div class="keep" style="left:0;right:0;bottom:0;height:'+P.bottom+'%"></div>';
+  el.innerHTML+='<div class="keep" style="right:0;width:'+rw+'%;top:'+P.railTop+'%;bottom:'+(100-P.railBot)+'%"></div>';
+  el.innerHTML+='<div class="sline" style="left:0;right:0;bottom:'+P.bottom+'%;border-top:1.6px dashed rgba(120,210,150,.95)"></div>';
+  el.innerHTML+='<div class="sline" style="right:'+rw+'%;top:'+P.railTop+'%;height:'+(P.railBot-P.railTop)+'%;border-left:1.6px dashed rgba(120,210,150,.95)"></div>';
+  var n=P.icons,y0=P.railTop+3,y1=P.railBot-3,step=(y1-y0)/(n-1),d=8.5;
+  for(var i=0;i<n;i++){el.innerHTML+='<div class="disc" style="width:'+d+'cqw;height:'+d+'cqw;right:'+(rw/2)+'%;top:'+(y0+i*step)+'%;transform:translate(50%,-50%)"></div>';}
+  el.innerHTML+='<div class="cbar" style="left:6cqw;bottom:'+(P.bottom-5)+'%;width:30cqw;height:3cqw;opacity:.55"></div>';
+  el.innerHTML+='<div class="cbar" style="left:6cqw;bottom:'+(P.bottom-10)+'%;width:52cqw"></div>';
+  el.innerHTML+='<div class="cbar" style="left:6cqw;bottom:'+(P.bottom-14)+'%;width:40cqw"></div>';
+  el.innerHTML+='<div class="plabel" style="left:6cqw;top:16cqw">'+P.name+' safe zones</div>';
+  el.innerHTML+='<div class="lab g" style="left:6cqw;bottom:'+(P.bottom+1.5)+'%">Keep text and logo above</div>';
+  el.innerHTML+='<div class="lab k" style="left:6cqw;bottom:'+(Math.max(P.bottom-19,2))+'%">Caption, username, audio</div>';
+  el.innerHTML+='<div class="lab k" style="right:0.5cqw;top:'+(P.railTop-4)+'%">Like, comment, share</div>';
+}
+
+function paint(){
+  const r=renderFrame(curBrand,curFrame);
+  frameEl.className="frame "+r.cls;
+  frameEl.style.background=r.bg;
+  frameEl.innerHTML=r.html;
+  renderSafe(curSafe);
+  // segs
+  [...document.querySelectorAll('#brandSeg button')].forEach(b=>b.classList.toggle('on',b.dataset.brand===curBrand));
+  [...document.querySelectorAll('#frameSeg button')].forEach(b=>b.classList.toggle('on',+b.dataset.frame===curFrame));
+  [...document.querySelectorAll('#safeSeg button')].forEach(b=>b.classList.toggle('on',b.dataset.safe===curSafe));
+  // dots
+  [...dotsEl].forEach((d,i)=>d.classList.toggle('on',i===curFrame));
+  // caption + meta
+  document.getElementById('stagecap').textContent=`${curBrand} · ${FRAMES[curFrame].toLowerCase()}`;
+  const f=DATA[curBrand].frames[curFrame];
+  document.getElementById('mFrame').textContent=FRAMES[curFrame];
+  document.getElementById('mBg').textContent=f.bgName;
+  document.getElementById('mLogo').textContent=(f.type==="outro")?"On this frame":"Outro only";
+  document.getElementById('mSwatches').innerHTML=(f.swatches||[]).map(c=>`<span class="sw" style="background:${c}"></span>`).join('');
+}
+
+function buildThumbs(){
+  const t=document.getElementById('thumbs'); t.innerHTML="";
+  BRANDS.forEach(b=>{
+    for(let i=0;i<3;i++){
+      const r=renderFrame(b,i);
+      const el=document.createElement('div');
+      el.className="thumb";
+      el.dataset.brand=b; el.dataset.frame=i;
+      el.innerHTML=`<div class="frame ${r.cls} mini" style="background:${r.bg}">${r.html}</div><div class="tl">${b.slice(0,4)} ${FRAMES[i].slice(0,3).toLowerCase()}</div>`;
+      el.addEventListener('click',()=>{ stop(); curBrand=b; curFrame=i; paint(); markThumb(); });
+      t.appendChild(el);
+    }
+  });
+  markThumb();
+}
+function markThumb(){
+  [...document.querySelectorAll('.thumb')].forEach(el=>{
+    el.classList.toggle('on', el.dataset.brand===curBrand && +el.dataset.frame===curFrame);
+  });
+}
+
+// controls
+document.getElementById('brandSeg').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b)return; stop(); curBrand=b.dataset.brand; paint(); markThumb();
+});
+document.getElementById('frameSeg').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b)return; stop(); curFrame=+b.dataset.frame; paint(); markThumb();
+});
+document.getElementById('safeSeg').addEventListener('click',e=>{
+  const b=e.target.closest('button'); if(!b)return; curSafe=b.dataset.safe; paint();
+});
+[...dotsEl].forEach((d,i)=>d.addEventListener('click',()=>{ stop(); curFrame=i; paint(); markThumb(); }));
+
+const playBtn=document.getElementById('playBtn');
+function play(){
+  playing=true; playBtn.classList.add('on'); playBtn.textContent="❚❚ Pause";
+  timer=setInterval(()=>{
+    curFrame++;
+    if(curFrame>2){ curFrame=0; curBrand=BRANDS[(BRANDS.indexOf(curBrand)+1)%BRANDS.length]; }
+    paint(); markThumb();
+  },1400);
+}
+function stop(){
+  playing=false; clearInterval(timer); playBtn.classList.remove('on'); playBtn.textContent="▶ Play reel";
+}
+playBtn.addEventListener('click',()=>{ playing?stop():play(); });
+
+// font-ready repaint (General Sans / Pixelify can arrive late)
+if(document.fonts && document.fonts.ready){ document.fonts.ready.then(()=>{ paint(); buildThumbs(); }); }
+
+buildThumbs();
+paint();
+</script>
+</body>
+</html>
