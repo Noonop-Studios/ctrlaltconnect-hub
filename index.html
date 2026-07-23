@@ -713,5 +713,27 @@ function showDIY(){_show('builderview','DIY');if(window.__fbInit)window.__fbInit
  var _fd=document.createElement('div'); _fd.innerHTML=F; document.body.appendChild(_fd.firstChild);
 })();
 </script>
+<script>
+/* Ctrl.Alt.Connect hub deep-link routing (handover doc links) */
+(function(){
+  function want(){var h=(location.hash||"").toLowerCase().replace(/^#/,"");
+    if(h==="reels"||h==="reel"||h==="templates")return "reelview";
+    if(h==="builder"||h==="frame"||h==="diy")return "builderview";
+    if(h==="hub")return "hubview"; return null;}
+  function apply(){var t=want(); if(!t)return;
+    if(t==="reelview"&&window.showReel)window.showReel();
+    else if(t==="builderview"&&window.showDIY)window.showDIY();
+    else if(t==="hubview"&&window.showHub)window.showHub();}
+  // re-assert for ~2.5s to beat the hub\u2019s own startup, then stop
+  var n=0,iv=setInterval(function(){var t=want();apply();n++;
+    var a=document.querySelector(".view.active");
+    if(!t||(a&&a.id===t)||n>25)clearInterval(iv);},100);
+  window.addEventListener("hashchange",apply);
+  document.addEventListener("click",function(e){var a=e.target.closest?e.target.closest("a[onclick]"):null;if(!a)return;var oc=a.getAttribute("onclick")||"";
+    if(/showReel/.test(oc))history.replaceState(null,"","#reels");
+    else if(/showDIY/.test(oc))history.replaceState(null,"","#builder");
+    else if(/showHub/.test(oc))history.replaceState(null,"","#hub");},true);
+})();
+</script>
 </body>
 </html>
