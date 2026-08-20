@@ -741,7 +741,7 @@ STATE.raf=requestAnimationFrame(frame);
         'ski|Day in the Life': {
            status:'review', date:'Aug 2026', note:'...',
            frames:[
-             {label:'Cover',   img:'reels/ski-cover.jpg', noSafe:true, note:'...'},
+             {label:'Cover',   img:'reels/ski-cover.jpg', note:'...'},
              {label:'Content', video:'reels/ski-footage.mp4', poster:'reels/ski-still.jpg',
                                overlay:'reels/ski-frame.png',
                                note:'...'},
@@ -754,11 +754,9 @@ STATE.raf=requestAnimationFrame(frame);
      Paths can be relative files in a reels/ folder, or data: URLs like the ones below.
      STRIP THE AUDIO from every clip before adding it (ffmpeg -i in.mp4 -an -c:v copy
      out.mp4) - everything here plays muted and on loop, and silent files are smaller.
-     Add  noSafe:true  to a frame that should not show safe zones (covers, for example,
-     are seen as a grid tile rather than in the player).
-
-     To hide the amber "internal preview" flag before this goes to the client,
-     delete the <div class="draftflag"> block.
+     Every frame, the full reel included, carries the same three way safe zone
+     toggle. Off is the default, so nothing is drawn over anything until the
+     client asks for it.
      ============================================================================ -->
 <div id="currentview" class="view">
 
@@ -863,9 +861,9 @@ var DRAFT_REELS = {
     status:'review', date:'Aug 2026',
     note:'Episode 01, Kat. A cover that names the person, the footage frame with the top and bottom bars held clear of the caption rail, and the link in bio outro.',
     frames:[
-      {label:'Full reel', video:DR_ART.fullReel, poster:DR_ART.fullReelPoster, full:true, forcePlat:'tt',
-       note:'The finished cut, shown inside the TikTok interface so you can see what the app covers. The sides, the bottom band and the button rail are all where they land in the feed.'},
-      {label:'Cover', img:DR_ART.coverExample, noSafe:true,
+      {label:'Full reel', video:DR_ART.fullReel, poster:DR_ART.fullReelPoster, full:true,
+       note:'The finished cut. Flick the safe zones on to drop the TikTok or Instagram interface over it and see exactly what the app covers.'},
+      {label:'Cover', img:DR_ART.coverExample,
        note:'Headline locked left, episode number top right. The name and arrow sit over the cream so they never clash with the photo. Swap the photo, the name and episode number per post.'},
       {label:'Content', img:DR_ART.dilContent,
        note:'The frame is a transparent PNG, shown here on its own. Drop it over the clip in CapCut and the footage fills the clear middle. Bars top and bottom keep the logo clear of the TikTok and Instagram controls.'},
@@ -877,9 +875,9 @@ var DRAFT_REELS = {
     status:'review', date:'Aug 2026',
     note:'The Weekend Highlight. A hero cut that sells the feeling rather than the detail. Cover names the story, the frame holds the footage inside a thin brand border, and the outro lands on the solid orange card.',
     frames:[
-      {label:'Full reel', video:DR_ART.chReel, poster:DR_ART.chPoster, full:true, forcePlat:'tt',
-       note:'The finished cut, shown inside the TikTok interface so you can see what the app covers. The sides, the bottom band and the button rail are all where they land in the feed.'},
-      {label:'Cover', img:DR_ART.chCover, noSafe:true,
+      {label:'Full reel', video:DR_ART.chReel, poster:DR_ART.chPoster, full:true,
+       note:'The finished cut. Flick the safe zones on to drop the TikTok or Instagram interface over it and see exactly what the app covers.'},
+      {label:'Cover', img:DR_ART.chCover,
        note:'Orange band across the top with the lockup, the story title on the rule beneath it, then the photo full width. Swap the photo and the title per post.'},
       {label:'Content', img:DR_ART.chContentStill,
        note:'A thin brand border with the lockup at the foot, shown here on its own. Transparent through the middle, so it sits over the whole clip in CapCut and lets the footage breathe.'},
@@ -891,9 +889,9 @@ var DRAFT_REELS = {
     status:'review',
     note:'Meet the Ambassador. The one where a person carries the story, so the frame stays out of the way and the grid does the holding.',
     frames:[
-      {label:'Full reel', video:DR_ART.thReel, poster:DR_ART.thPoster, full:true, forcePlat:'tt',
-       note:'The finished cut, shown inside the TikTok interface so you can see what the app covers. The sides, the bottom band and the button rail are all where they land in the feed.'},
-      {label:'Cover', img:DR_ART.thCover, noSafe:true,
+      {label:'Full reel', video:DR_ART.thReel, poster:DR_ART.thPoster, full:true,
+       note:'The finished cut. Flick the safe zones on to drop the TikTok or Instagram interface over it and see exactly what the app covers.'},
+      {label:'Cover', img:DR_ART.thCover,
        note:'Headline sits on the grid over a navy panel, with the photo running out beneath it. Swap the photo and the name of the person per post.'},
       {label:'Content', img:DR_ART.thContentStill,
        note:'Almost all clear. A light grid, the headline and the mark, so the person stays the subject. Drop it over the clip in CapCut and everything shows through.'},
@@ -905,9 +903,9 @@ var DRAFT_REELS = {
     status:'review',
     note:'Two frames rather than three. The gradient card opens it and the side bar carries the branding while the offer does the talking.',
     frames:[
-      {label:'Full reel', video:DR_ART.slReel, poster:DR_ART.slPoster, full:true, forcePlat:'tt',
-       note:'The finished cut, shown inside the TikTok interface so you can see what the app covers. The sides, the bottom band and the button rail are all where they land in the feed.'},
-      {label:'Cover', img:DR_ART.slCover, noSafe:true,
+      {label:'Full reel', video:DR_ART.slReel, poster:DR_ART.slPoster, full:true,
+       note:'The finished cut. Flick the safe zones on to drop the TikTok or Instagram interface over it and see exactly what the app covers.'},
+      {label:'Cover', img:DR_ART.slCover,
        note:'Full bleed brand gradient with the lockup centred. Nothing else competes with it, so the words you add in the caption carry the offer.'},
       {label:'Content', img:DR_ART.slContentStill,
        note:'A gradient bar down the left with the lockup turned on its side. Clear everywhere else, so it sits over the whole clip and keeps the brand present without covering the product.'}
@@ -917,9 +915,9 @@ var DRAFT_REELS = {
     status:'review',
     note:'The rough and ready one. Phone footage carries it, so the frame is barely there and the caption pill does the talking.',
     frames:[
-      {label:'Full reel', video:DR_ART.bsReel, poster:DR_ART.bsPoster, full:true, forcePlat:'tt',
-       note:'The finished cut, shown inside the TikTok interface so you can see what the app covers. The sides, the bottom band and the button rail are all where they land in the feed.'},
-      {label:'Cover', img:DR_ART.bsCover, noSafe:true,
+      {label:'Full reel', video:DR_ART.bsReel, poster:DR_ART.bsPoster, full:true,
+       note:'The finished cut. Flick the safe zones on to drop the TikTok or Instagram interface over it and see exactly what the app covers.'},
+      {label:'Cover', img:DR_ART.bsCover,
        note:'Full bleed photo with the lockup at the top and the caption pill across the middle. Swap the photo and the line in the pill per post.'},
       {label:'Content', img:DR_ART.bsContentStill,
        note:'The lightest frame in the set. A dashed cream rule and the mark, nothing else, so the footage carries the whole thing. Shown here on navy because the artwork is cream and would vanish on white.'}
@@ -929,9 +927,9 @@ var DRAFT_REELS = {
     status:'review',
     note:'You booked it solo. The viewfinder corners and the REC pill do the work, so it reads as something caught rather than something made.',
     frames:[
-      {label:'Full reel', video:DR_ART.pvReel, poster:DR_ART.pvPoster, full:true, forcePlat:'tt',
-       note:'The finished cut, shown inside the TikTok interface so you can see what the app covers. The sides, the bottom band and the button rail are all where they land in the feed.'},
-      {label:'Cover', img:DR_ART.pvCover, noSafe:true,
+      {label:'Full reel', video:DR_ART.pvReel, poster:DR_ART.pvPoster, full:true,
+       note:'The finished cut. Flick the safe zones on to drop the TikTok or Instagram interface over it and see exactly what the app covers.'},
+      {label:'Cover', img:DR_ART.pvCover,
        note:'Full bleed photo with the lockup up top, the POV line across the middle and the REC pill at the foot. Swap the photo and the line after POV per post.'},
       {label:'Content', img:DR_ART.pvContentStill,
        note:'Lockup and the POV line in outline, clear everywhere else. Drop it over the clip in CapCut and the outline lets the footage read straight through the letters.'}
@@ -941,9 +939,9 @@ var DRAFT_REELS = {
     status:'review',
     note:'Built around the track. The cut lands on the beat and the frame stays out of the way, so the music and the footage do all of it.',
     frames:[
-      {label:'Full reel', video:DR_ART.ndReel, poster:DR_ART.ndPoster, full:true, forcePlat:'tt',
-       note:'The finished cut, shown inside the TikTok interface so you can see what the app covers. The sides, the bottom band and the button rail are all where they land in the feed.'},
-      {label:'Cover', img:DR_ART.ndCover, noSafe:true,
+      {label:'Full reel', video:DR_ART.ndReel, poster:DR_ART.ndPoster, full:true,
+       note:'The finished cut. Flick the safe zones on to drop the TikTok or Instagram interface over it and see exactly what the app covers.'},
+      {label:'Cover', img:DR_ART.ndCover,
        note:'Photo held inside an olive border with the lockup sitting under it. Swap the photo per post and the border keeps every cover looking like a set.'},
       {label:'Content', img:DR_ART.ndContentStill,
        note:'The mark top left and the cue line in pixel type in the middle, clear everywhere else. Change the three words to suit the track and drop it over the clip in CapCut.'}
@@ -953,8 +951,8 @@ var DRAFT_REELS = {
     status:'review',
     note:'One frame and nothing else. A soft panel wash with the caption in pixel type, so it reads as a screenshot someone reposted rather than something the brand made.',
     frames:[
-      {label:'Full reel', video:DR_ART.mmReel, poster:DR_ART.mmPoster, full:true, forcePlat:'tt',
-       note:'The finished cut, shown inside the TikTok interface so you can see what the app covers. The sides, the bottom band and the button rail are all where they land in the feed.'},
+      {label:'Full reel', video:DR_ART.mmReel, poster:DR_ART.mmPoster, full:true,
+       note:'The finished cut. Flick the safe zones on to drop the TikTok or Instagram interface over it and see exactly what the app covers.'},
       {label:'Content', img:DR_ART.mmContentStill,
        note:'The whole frame is a light wash split into panels, with the lockup top left and the caption low left. It sits over the clip for the full length rather than cutting in, so change the two words and nothing else.'}
     ]
@@ -1061,10 +1059,10 @@ var DRAFT_REELS = {
   function frameCard(b,f,i,fr,n){
     return '<div class="creel" data-b="'+esc(b)+'" data-f="'+esc(f.name)+'" data-i="'+i+'">'+
       '<div class="cmedia'+(fr.fit?' fit':'')+'">'+frameMedia(fr,false)+
-        (fr.noSafe?'':'<div class="plat mini'+(fr.forcePlat?' show':'')+'"'+(fr.forcePlat?' data-force="'+esc(fr.forcePlat)+'"':'')+'></div>')+
+        '<div class="plat mini"></div>'+
       '</div>'+
       '<div class="cbody"><div class="t">'+esc(fr.label||('Frame '+pad(n)))+'</div>'+
-      '<div class="m">'+esc(f.name)+(fr.full?' &middot; TikTok view':'')+'</div></div></div>';
+      '<div class="m">'+esc(f.name)+'</div></div></div>';
   }
   function reelCard(b,f,r){
     var st=STATUS[r.status]?r.status:'draft';
@@ -1172,7 +1170,7 @@ var DRAFT_REELS = {
     sc.className='lbscreen';
     sc.innerHTML = '<div class="lbreel'+((fr&&(LB.alt?(fr.altFit||fr.fit):fr.fit))?' fit':'')+'">'+
                    (fr ? frameMedia(fr,true,LB.alt,LB.hideOvl) : reelMedia(LB.b,f,r,true))+
-                   ((fr&&fr.noSafe)?'':'<div class="plat"'+((fr&&fr.forcePlat)?' data-force="'+esc(fr.forcePlat)+'"':'')+'></div>')+
+                   '<div class="plat"></div>'+
                    '</div><div class="island"></div>';
     document.getElementById('lbKick').textContent=(LABEL[LB.b]||'')+' '+f.name;
     document.getElementById('lbTitle').textContent=fr?(fr.label||'Frame'):(r.title||f.name);
@@ -1184,13 +1182,10 @@ var DRAFT_REELS = {
       var src=x.img||x.poster||x.overlay||'';
       return '<div class="lbthumb'+(i===LB.i?' on':'')+'" data-th="'+i+'">'+(src?'<img src="'+esc(src)+'" alt="">':'')+'</div>';}).join('');
     document.getElementById('lbThumbs').innerHTML=th;
-    document.getElementById('lbPlat').innerHTML=(fr&&fr.forcePlat)?
-      '<span style="font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#4e626a">Shown inside the TikTok interface</span>':
-      (fr&&fr.noSafe)?
-      '<span style="font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#4e626a">Cover, seen in the feed, no safe zones needed</span>':
-      ('<button class="pill" data-plat="off">No safe zones</button>'+
-       '<button class="pill" data-plat="ig">Instagram</button>'+
-       '<button class="pill" data-plat="tt">TikTok</button>');
+    document.getElementById('lbPlat').innerHTML=
+      '<button class="pill" data-plat="off">No safe zones</button>'+
+      '<button class="pill" data-plat="ig">Instagram</button>'+
+      '<button class="pill" data-plat="tt">TikTok</button>';
     paintPlat();
   }
 
